@@ -1,0 +1,36 @@
+### get /
+GET http://localhost:1234/movies
+
+### get /:id
+GET http://localhost:1234/movies/c8a7d63f-3b04-44d3-9d95-8782fd7dcfaf
+
+### get movies by genre
+GET http://localhost:1234/movies/genre/action
+
+### get movies by genre by pram
+GET http://localhost:1234/movies?genre=action
+
+### get movies by director
+GET http://localhost:1234/movies/director/robert
+
+### create a new movie
+POST http://localhost:1234/movies
+Content-Type: application/json
+
+{
+    "title": "The Godfather",
+    "year": 1972,
+    "director": "Francis Ford Coppola",
+    "duration":175,
+    "poster": "https://i.imgur.com/Uzvny9I.jpg",
+    "genre": ["Crime", "Drama"],
+    "runtime": 175
+}
+
+### update a movie
+PATCH http://localhost:1234/movies/dcdd0fad-a94c-4810-8acc-5f108d3b18c3
+Content-Type: application/json
+
+{
+    "year": 1994
+}

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Probar API Rest</title>
+        <style>
+            article {
+                border: 1px solid #ccc;
+                margin-bottom: 10px;
+                padding: 10px;
+            }
+            img {
+                width: 320px;
+                height: auto;
+                max-width: 100%;
+            }
+        </style>
+        <script>
+            fetch("http://localhost:1234/movies")
+                .then((response) => response.json())
+                .then((movies) => {
+                    const html = movies
+                        .map((movie) => {
+                            return `
+                                <article data-id="${movie.id}">
+                                    <h1>${movie.title}</h1>
+                                    <img src="${movie.poster}" alt="${movie.title}">
+                                    <p>${movie.director}</p>
+                                    <button>Eliminar</button>
+                                </article>
+                                `;
+                        })
+                        .join("");
+                    document.querySelector("body").innerHTML = html;
+                    document.addEventListener("click", (e) => {
+                        if (e.target.matches("button")) {
+                            const article = e.target.parentElement;
+                            const id = article.dataset.id;
+                            fetch(`http://localhost:1234/movies/${id}`, {
+                                method: "DELETE",
+                            }).then((res) => {
+                                if (res.ok){
+                                    // remove element from DOM
+                                    article.remove();
+                                }
+                            });
+                        }
+                    });
+                });
+        </script>
+    </head>
+    <body></body>
+</html>
